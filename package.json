@@ -1,0 +1,55 @@
+{
+  "name": "population-api",
+  "version": "1.0.0",
+  "description": "LMS Output",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node bin/dev",
+    "test": "babel-node src/database/database.js && mocha --require @babel/register 'test/**/**spec.js' --exit",
+    "clean": "rm -rf build",
+    "build": "npm run clean && babel src -d build && npm run db:migrate",
+    "start": "npm run build && node ./build/index.js",
+    "lint": "eslint 'src/**/*.js' --fix",
+    "format": "prettier-eslint 'server/**/*.{js,json}' --write",
+    "db:migrate": "babel-node src/database/database.js"
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "prettier-eslint --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "repository": "https://github.com/dcDalin/popAPI.git",
+  "author": "dcDalin <mcdalinoluoch@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^6.2.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "husky": "^3.0.4",
+    "lint-staged": "^9.2.3",
+    "nodemon": "^1.19.1",
+    "prettier-eslint-cli": "^5.0.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "massive": "^5.11.2",
+    "mocha": "^6.2.0",
+    "pg": "^7.12.1"
+  }
+}
