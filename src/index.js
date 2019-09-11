@@ -2,6 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import countyRouter from './routes/county';
 import subCountyRouter from './routes/sub-county';
+import config from './config';
+
+const ENV_VAR = config.get(process.env.NODE_ENV);
+
+const PORT = process.env.PORT || ENV_VAR.APP_PORT;
 
 const app = express();
 app.use(
@@ -9,8 +14,6 @@ app.use(
     extended: true,
   }),
 );
-
-const { PORT } = process.env;
 
 app.use(bodyParser.json());
 
